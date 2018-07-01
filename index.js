@@ -33,7 +33,7 @@ class Server {
     initServer() {
         let PORT = process.env.PORT || 3000;
         let HOST = "localhost";
-        this.server.listen(PORT, HOST, function(err){
+        this.server.listen(PORT, function(err){
             console.log('Listening on Port '+ HOST + ' '+PORT);
         });
     }
