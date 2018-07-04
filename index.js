@@ -13,6 +13,7 @@ class Server {
         this.app = express();
         this.server = http.Server(this.app);
         this.initConfig();
+        this.initCORS();
         this.initRoutes();
         this.handleExceptions();
         this.initServer();
@@ -29,11 +30,20 @@ class Server {
         this.app.use(errorHandler);
         this.app.use(error404Handler);
     }
+
+    initCORS() {
+        this.app.all('/*', function(req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+            res.header("Access-Control-Allow-Methods", "GET, POST","PUT");
+            next();
+        });
+    }
     
     initServer() {
         let PORT = process.env.PORT || 3000;
         let HOST = "localhost";
-        this.server.listen(PORT, function(err){
+        this.server.listen(PORT, HOST, function(err){
             console.log('Listening on Port '+ HOST + ' '+PORT);
         });
     }
